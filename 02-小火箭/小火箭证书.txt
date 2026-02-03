@@ -1,0 +1,12 @@
+[MITM]
+# 状态：开启
+enable = true
+# 证书信息：请在小火箭 UI 界面手动生成并安装
+ca-passphrase = 
+ca-p12 = 
+
+# 域名解释：
+# 1. 常用解密：Googlevideo(Youtube去广告)、Google(搜索重定向)、Github、Instagram/TikTok/Netflix(功能解锁/去广告)
+# 2. 排除域名(-)：苹果服务、中国各大银行、常用支付工具、快递等。这些域名必须排除，否则会报错或无法连接。
+
+hostname = *.googlevideo.com, *.google.cn, www.google.*, *.g.cn, *.githubusercontent.com, *.instagram.com, *.cdninstagram.com, *.tiktokv.com, *.byteoversea.com, *.netflix.com, -*.apple.com, -*.icloud.com, -*.mzstatic.com, -*.itunes.apple.com, -weather-data.apple.com, -buy.itunes.apple.com, -*.crashlytics.com, -*.alipay.com, -*.jd.com, -*.taobao.com, -*.baidu.com, -*.wechat.com, -*.tencent.com, -*huami.com, -*snssdk.com, -*amemv.com, -consumer.fcbox.com
