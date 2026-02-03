@@ -1,0 +1,606 @@
+# Stash Config Make by Coldvvater
+# Updated by User
+# Update Date: 2025.05.01
+
+# ====================
+# 1. 基础设置 (保留了你的设置)
+# ====================
+mode: rule
+log-level: info
+
+# ====================
+# 2. DNS 模块 (保留了你添加的更优质的 DoH 设置)
+# ====================
+dns:
+  default-nameserver:
+    - 119.29.29.29
+    - 223.5.5.5
+  nameserver:
+    - https://dns.alidns.com/dns-query
+    - https://doh.pub/dns-query
+  fake-ip-filter:
+    - "*"
+    - "+.lan"
+    - "+.local"
+
+# ====================
+# 3. Tiles & Scripts (你添加的磁贴)
+# ====================
+tiles:
+  - name: Billboard Hot 100
+    icon: 'music.note.list'
+    backgroundColor: '#fc5656'
+    argument: 'songCount=20'
+  - name: jinripingtairebang
+    icon: 'text.badge.star'
+    backgroundColor: '#FFD700'
+    argument: 'platform=微博&count=20'
+
+script-providers:
+  jinripingtairebang:
+    url: https://raw.githubusercontent.com/deezertidal/Surge_Module/master/files/hotoday.js
+  Billboard Hot 100:
+    url: https://raw.githubusercontent.com/deezertidal/Surge_Module/master/files/bb100.js
+
+# ====================
+# 4. 代理与策略组 (原文件核心部分)
+# ====================
+proxies:
+
+proxy-groups:
+  # 功能分组
+  - name: 选择代理
+    icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Proxy.png
+    type: select
+    proxies:
+      - DIRECT
+      - 自动选择
+      - 手动选择
+      - US-美国🇺🇸
+      - HK-香港🇭🇰
+      - DE-德国🇩🇪
+      - TW 台湾
+      - SG 新加坡🇸🇬
+      - JP 日本🇯🇵
+      - IN 印度🇮🇳
+      - KR韩国🇰🇷
+      - UK 英国🇬🇧
+      - CA 加拿大🇨🇦
+      - FR 法国🇫🇷
+      - AU 澳大利亚🇦🇺
+      - RU 俄罗斯🇷🇺
+    interval: 600
+    lazy: true
+  - name: 默认
+    icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Final.png
+    type: select
+    proxies:
+      - 选择代理
+      - DIRECT
+  - name: 手动选择
+    icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Static.png
+    interval: 600
+    lazy: true
+    type: select
+    include-all: true
+  - name: 自动选择
+    icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Auto.png
+    interval: 120
+    lazy: true
+    tolerance: 50
+    type: url-test
+    include-all: true
+    hidden: true
+  - icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Domestic.png
+    name: 国内媒体
+    proxies:
+      - DIRECT
+      - 选择代理
+    type: select
+  - icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Apple.png
+    name: 苹果服务
+    proxies:
+      - DIRECT
+      - 选择代理
+    type: select
+  - icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Cellular.png
+    interval: 600
+    lazy: true
+    name: 国内直连
+    proxies:
+      - 选择代理
+      - DIRECT
+    type: select
+  - icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/Microsoft.png
+    name: 微软服务
+    proxies:
+      - DIRECT
+      - 选择代理
+    type: select
+  - name: US-美国🇺🇸
+    filter: "美|🇺🇸|US|(?i)States|America"
+    icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/United_States.png
+    interval: 600
+    lazy: true
+    tolerance: 50
+    type: url-test
+    include-all: true
+  # 基于地区分组
+  - name: HK-香港🇭🇰
+    filter: "澳门|🇲🇴|港|🇭🇰|HK|(?i)Hong"
+    icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Hong_Kong.png
+    interval: 600
+    lazy: true
+    tolerance: 50
+    type: url-test
+    include-all: true
+  - filter: (?i)(德国|Germany|De|德|Deutschland|Frankfurt|Berlin|Munich|慕尼黑|法兰克福|法蘭克福)
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Germany.png
+    include-all: true
+    name: 'DE-德国🇩🇪'
+    type: url-test
+    interval: 600
+    lazy: true
+    tolerance: 50
+  - icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/India.png
+    name: IN 印度🇮🇳
+    type: url-test
+    filter: '印度|🇮🇳|IN|in|(?i)India|(?i)Mumbai '
+    interval: 600
+    lazy: true
+    tolerance: 50
+    include-all: true
+  - name: TW 台湾
+    filter: "台|🇹🇼|湾|TW|(?i)Taiwan"
+    icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Taiwan.png
+    interval: 600
+    lazy: true
+    tolerance: 50
+    type: url-test
+    include-all: true
+    hidden: null
+  - name: SG 新加坡🇸🇬
+    filter: "新加坡|坡|狮城|🇸🇬|SG|(?i)Singapore"
+    icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Singapore.png
+    interval: 600
+    lazy: true
+    tolerance: 50
+    type: url-test
+    include-all: true
+    hidden: null
+  - name: JP 日本🇯🇵
+    filter: "日|🇯🇵|东京|JP|(?i)Japan"
+    icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Japan.png
+    interval: 600
+    lazy: true
+    tolerance: 50
+    type: url-test
+    include-all: true
+    hidden: null
+  - icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/KR.png
+    interval: 600
+    lazy: true
+    name: KR韩国🇰🇷
+    proxies: null
+    type: url-test
+    tolerance: 50
+    include-all: true
+    filter: '韩国|韩|🇰🇷|KR|kr|(?i)Korea|(?i)Seoul '
+  - filter: '英国|英|🇬🇧|UK|uk|GB|gb|(?i)United Kingdom|(?i)Britain|(?i)London '
+    icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/UK.png
+    interval: 600
+    lazy: true
+    name: UK 英国🇬🇧
+    type: url-test
+    tolerance: 50
+    include-all: true
+  - icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Canada.png
+    name: CA 加拿大🇨🇦
+    type: url-test
+    filter: '加拿大|加|🇨🇦|CA|ca|(?i)Canada|(?i)Toronto|(?i)Vancouver|(?i)Montreal '
+    interval: 600
+    lazy: true
+    tolerance: 50
+    include-all: true
+  - filter: '法国|法|🇫🇷|FR|fr|(?i)France|(?i)Paris '
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/France.png
+    interval: 600
+    lazy: true
+    name: FR 法国🇫🇷
+    type: url-test
+    tolerance: 50
+    include-all: true
+  - icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Australia.png
+    name: AU 澳大利亚🇦🇺
+    type: url-test
+    filter: '澳洲|澳大利亚|澳|🇦🇺|AU|au|(?i)Australia|(?i)Sydney|(?i)Melbourne '
+    interval: 600
+    lazy: true
+    tolerance: 50
+    include-all: true
+  - filter: '俄罗斯|俄|🇷🇺|RU|ru|(?i)Russia|(?i)Moscow '
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Russia.png
+    interval: 600
+    lazy: true
+    name: RU 俄罗斯🇷🇺
+    type: url-test
+    tolerance: 50
+    include-all: true
+  - filter: '^(?!.*(HK|TW|SG|JP|US|KR|UK|RU|IN|CA|AU|FR|香港|台湾|新加坡|日本|美国|韩国|英国|俄罗斯|印度|加拿大|澳洲|法国)).* '
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/World_Map.png
+    interval: 600
+    lazy: true
+    name: 其他地区
+    type: url-test
+    tolerance: 50
+    include-all: true
+  - icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/GitHub.png
+    name: GitHub
+    proxies:
+      - 默认
+      - DIRECT
+      - 选择代理
+      - 手动选择
+      - 自动选择
+      - US-美国🇺🇸
+      - HK-香港🇭🇰
+      - DE-德国🇩🇪
+      - IN 印度🇮🇳
+      - TW 台湾
+      - SG 新加坡🇸🇬
+      - JP 日本🇯🇵
+      - KR韩国🇰🇷
+      - UK 英国🇬🇧
+      - CA 加拿大🇨🇦
+      - FR 法国🇫🇷
+      - RU 俄罗斯🇷🇺
+      - AU 澳大利亚🇦🇺
+      - 其他地区
+    type: select
+    interval: 600
+    lazy: true
+  - icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Google_Search.png
+    interval: 600
+    lazy: true
+    name: Google
+    proxies:
+      - 选择代理
+      - 手动选择
+      - 自动选择
+      - US-美国🇺🇸
+      - HK-香港🇭🇰
+      - DE-德国🇩🇪
+      - IN 印度🇮🇳
+      - TW 台湾
+      - SG 新加坡🇸🇬
+      - JP 日本🇯🇵
+      - KR韩国🇰🇷
+      - UK 英国🇬🇧
+      - CA 加拿大🇨🇦
+      - FR 法国🇫🇷
+      - AU 澳大利亚🇦🇺
+      - RU 俄罗斯🇷🇺
+      - 其他地区
+    type: select
+  - name: Youtube
+    icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/YouTube.png
+    type: select
+    proxies:
+      - 默认
+      - 选择代理
+      - 自动选择
+      - 手动选择
+      - US-美国🇺🇸
+      - HK-香港🇭🇰
+      - DE-德国🇩🇪
+      - TW 台湾
+      - SG 新加坡🇸🇬
+      - JP 日本🇯🇵
+      - IN 印度🇮🇳
+      - KR韩国🇰🇷
+      - UK 英国🇬🇧
+      - CA 加拿大🇨🇦
+      - FR 法国🇫🇷
+      - AU 澳大利亚🇦🇺
+      - RU 俄罗斯🇷🇺
+      - 其他地区
+    hidden: null
+    interval: 600
+    lazy: true
+  - icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Twitter.png
+    name: Twitter
+    proxies:
+      - 默认
+      - 选择代理
+      - 手动选择
+      - 自动选择
+      - US-美国🇺🇸
+      - HK-香港🇭🇰
+      - DE-德国🇩🇪
+      - TW 台湾
+      - SG 新加坡🇸🇬
+      - JP 日本🇯🇵
+      - IN 印度🇮🇳
+      - KR韩国🇰🇷
+      - UK 英国🇬🇧
+      - CA 加拿大🇨🇦
+      - FR 法国🇫🇷
+      - AU 澳大利亚🇦🇺
+      - RU 俄罗斯🇷🇺
+      - 其他地区
+    type: select
+    hidden: null
+    interval: 600
+    lazy: true
+  - icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/Telegram.png
+    name: Telegram
+    proxies:
+      - 默认
+      - 选择代理
+      - 手动选择
+      - 自动选择
+      - US-美国🇺🇸
+      - HK-香港🇭🇰
+      - DE-德国🇩🇪
+      - TW 台湾
+      - JP 日本🇯🇵
+      - SG 新加坡🇸🇬
+      - IN 印度🇮🇳
+      - KR韩国🇰🇷
+      - UK 英国🇬🇧
+      - CA 加拿大🇨🇦
+      - FR 法国🇫🇷
+      - AU 澳大利亚🇦🇺
+      - RU 俄罗斯🇷🇺
+      - 其他地区
+    type: select
+    hidden: null
+    interval: 600
+    lazy: true
+  - icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/TikTok.png
+    interval: 600
+    lazy: true
+    name: TikTok
+    proxies:
+      - 选择代理
+      - 手动选择
+      - 自动选择
+      - US-美国🇺🇸
+      - HK-香港🇭🇰
+      - DE-德国🇩🇪
+      - IN 印度🇮🇳
+      - TW 台湾
+      - SG 新加坡🇸🇬
+      - JP 日本🇯🇵
+      - KR韩国🇰🇷
+      - UK 英国🇬🇧
+      - CA 加拿大🇨🇦
+      - FR 法国🇫🇷
+      - AU 澳大利亚🇦🇺
+      - RU 俄罗斯🇷🇺
+      - 其他地区
+    type: select
+  - name: Netflix
+    icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Netflix.png
+    type: select
+    proxies:
+      - 默认
+      - 选择代理
+      - 自动选择
+      - 手动选择
+      - US-美国🇺🇸
+      - HK-香港🇭🇰
+      - DE-德国🇩🇪
+      - TW 台湾
+      - SG 新加坡🇸🇬
+      - JP 日本🇯🇵
+      - IN 印度🇮🇳
+      - KR韩国🇰🇷
+      - UK 英国🇬🇧
+      - CA 加拿大🇨🇦
+      - FR 法国🇫🇷
+      - AU 澳大利亚🇦🇺
+      - RU 俄罗斯🇷🇺
+      - 其他地区
+    hidden: null
+    interval: 600
+    lazy: true
+  - name: Disney+
+    icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Disney%2B.png
+    type: select
+    proxies:
+      - 默认
+      - 选择代理
+      - 自动选择
+      - 手动选择
+      - US-美国🇺🇸
+      - HK-香港🇭🇰
+      - DE-德国🇩🇪
+      - TW 台湾
+      - SG 新加坡🇸🇬
+      - JP 日本🇯🇵
+      - IN 印度🇮🇳
+      - KR韩国🇰🇷
+      - UK 英国🇬🇧
+      - CA 加拿大🇨🇦
+      - FR 法国🇫🇷
+      - AU 澳大利亚🇦🇺
+      - RU 俄罗斯🇷🇺
+      - 其他地区
+    hidden: null
+    interval: 600
+    lazy: true
+  - name: Spotify
+    icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Spotify.png
+    type: select
+    proxies:
+      - 默认
+      - 选择代理
+      - 自动选择
+      - 手动选择
+      - US-美国🇺🇸
+      - HK-香港🇭🇰
+      - DE-德国🇩🇪
+      - TW 台湾
+      - SG 新加坡🇸🇬
+      - JP 日本🇯🇵
+      - DIRECT
+      - IN 印度🇮🇳
+      - KR韩国🇰🇷
+      - UK 英国🇬🇧
+      - CA 加拿大🇨🇦
+      - FR 法国🇫🇷
+      - AU 澳大利亚🇦🇺
+      - RU 俄罗斯🇷🇺
+      - 其他地区
+    hidden: null
+    interval: 600
+    lazy: true
+  - name: Speedtest
+    icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Speedtest.png
+    type: select
+    proxies:
+      - 默认
+      - 选择代理
+      - 自动选择
+      - 手动选择
+      - US-美国🇺🇸
+      - HK-香港🇭🇰
+      - DE-德国🇩🇪
+      - TW 台湾
+      - SG 新加坡🇸🇬
+      - JP 日本🇯🇵
+      - IN 印度🇮🇳
+      - KR韩国🇰🇷
+      - UK 英国🇬🇧
+      - CA 加拿大🇨🇦
+      - FR 法国🇫🇷
+      - AU 澳大利亚🇦🇺
+      - RU 俄罗斯🇷🇺
+      - 其他地区
+    hidden: null
+    interval: 600
+    lazy: true
+
+# ====================
+# 5. 分流规则 (保留)
+# ====================
+rules:
+  - RULE-SET,TikTok,TikTok
+  - RULE-SET,Google,Google
+  - RULE-SET,国内直连,国内直连
+  - RULE-SET,国内媒体,国内媒体
+  - RULE-SET,GitHub,GitHub
+  - RULE-SET,苹果服务,苹果服务
+  - RULE-SET,微软服务,微软服务
+  - RULE-SET,Twitter,Twitter
+  - RULE-SET,Telegram,Telegram
+  - SCRIPT,quic,REJECT
+  - GEOSITE,netflix,Netflix
+  - GEOSITE,disney,Disney+
+  - GEOSITE,spotify,Spotify
+  - GEOSITE,speedtest,Speedtest
+  - GEOSITE,github,选择代理
+  - IP-ASN,62014,选择代理,no-resolve
+  - IP-ASN,59930,选择代理,no-resolve
+  - IP-ASN,44907,选择代理,no-resolve
+  - IP-ASN,211157,选择代理,no-resolve
+  - PROCESS-NAME,Telegram.exe,选择代理
+  - PROCESS-NAME,Telegram,选择代理
+  - GEOSITE,telegram,选择代理
+  - GEOSITE,youtube,Youtube
+  - GEOSITE,google,选择代理
+  - GEOSITE,twitter,选择代理
+  - DOMAIN-SUFFIX,tapbots.com,选择代理
+  - GEOSITE,instagram,选择代理
+  - GEOSITE,facebook,选择代理
+  - GEOSITE,steam@cn,DIRECT
+  - GEOSITE,steam,选择代理
+  - DOMAIN-SUFFIX,iphone-ld.apple.com,DIRECT
+  - DOMAIN-SUFFIX,lcdn-locator.apple.com,DIRECT
+  - DOMAIN-SUFFIX,lcdn-registration.apple.com,DIRECT
+  - DOMAIN-SUFFIX,push.apple.com,DIRECT
+  - PROCESS-NAME,trustd,选择代理
+  - GEOSITE,microsoft@cn,DIRECT
+  - GEOSITE,microsoft,微软服务
+  - GEOSITE,xbox,微软服务
+  - PROCESS-NAME,v2ray,DIRECT
+  - PROCESS-NAME,Surge,DIRECT
+  - PROCESS-NAME,ss-local,DIRECT
+  - PROCESS-NAME,privoxy,DIRECT
+  - PROCESS-NAME,trojan,DIRECT
+  - PROCESS-NAME,trojan-go,DIRECT
+  - PROCESS-NAME,naive,DIRECT
+  - PROCESS-NAME,CloudflareWARP,DIRECT
+  - PROCESS-NAME,Cloudflare WARP,DIRECT
+  - IP-CIDR,162.159.193.0/24,DIRECT,no-resolve
+  - PROCESS-NAME,p4pclient,DIRECT
+  - PROCESS-NAME,Thunder,DIRECT
+  - PROCESS-NAME,DownloadService,DIRECT
+  - PROCESS-NAME,qbittorrent,DIRECT
+  - PROCESS-NAME,Transmission,DIRECT
+  - PROCESS-NAME,fdm,DIRECT
+  - PROCESS-NAME,aria2c,DIRECT
+  - PROCESS-NAME,Folx,DIRECT
+  - PROCESS-NAME,NetTransport,DIRECT
+  - PROCESS-NAME,uTorrent,DIRECT
+  - PROCESS-NAME,WebTorrent,DIRECT
+  - GEOIP,LAN,DIRECT
+  - GEOIP,CN,DIRECT
+  - MATCH,默认
+
+# ====================
+# 6. Script & Providers (合并了旧的脚本逻辑)
+# ====================
+script:
+  shortcuts:
+    quic: network == 'udp' and dst_port == 443
+
+rule-providers:
+  Telegram:
+    behavior: classical
+    format: text
+    interval: 86400
+    url: https://whatshub.top/rule/Telegram.rule
+  Twitter:
+    behavior: classical
+    format: text
+    interval: 86400
+    url: https://whatshub.top/rule/Twitter.rule
+  微软服务:
+    behavior: classical
+    format: text
+    interval: 86400
+    url: https://whatshub.top/rule/Microsoft.rule
+  苹果服务:
+    behavior: classical
+    format: text
+    interval: 86400
+    url: https://whatshub.top/rule/Apple.list
+  GitHub:
+    behavior: classical
+    format: text
+    interval: 86400
+    url: https://whatshub.top/rule/GitHub.list
+  国内媒体:
+    behavior: classical
+    format: text
+    interval: 86400
+    url: https://whatshub.top/rule/ChinaMedia.list
+  国内直连:
+    behavior: classical
+    format: text
+    interval: 86400
+    url: https://whatshub.top/rule/China.list
+  Google:
+    behavior: classical
+    format: text
+    interval: 86400
+    url: https://whatshub.top/rule/Google.list
+  TikTok:
+    behavior: classical
+    format: text
+    interval: 86400
+    url: https://whatshub.top/rule/TikTok.list
+
+subscribe-url: https://shijian.hokegamingop.eu.org/?id=1foe6txv
